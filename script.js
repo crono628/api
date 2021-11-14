@@ -1,10 +1,10 @@
-const img = document.querySelector('img');
 const body = document.querySelector('body');
-const input = document.querySelector('input');
 const form = document.forms[0];
-let theArray = [];
+const input = document.querySelector('input');
+
+let theArray;
 const getData = (search) => {
-  img.src = '#';
+  theArray = [];
   fetch(
     'https://api.giphy.com/v1/gifs/search?api_key=ANIJA3rCnAySYPvxmFd5SOli9wX62Gp5&q=' +
       search,
@@ -14,24 +14,13 @@ const getData = (search) => {
       return response.json();
     })
     .then(function (response) {
-      theArray.push(response);
+      theArray.push(response.data);
     });
 };
-
-function render() {
-  let i = 0;
-
-  while (i < theArray.length) {
-    let ele = theArray[0].data[i].url;
-    dom('img', { src: ele }, null, body);
-    i++;
-  }
-}
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
   getData(`${input.value}`);
-  render();
 });
 
 function dom(element, attributes = {}, text, parent) {
@@ -46,4 +35,13 @@ function dom(element, attributes = {}, text, parent) {
     parent.appendChild(elem);
   }
   return elem;
+}
+
+function display() {
+  for (let i = 0; i < 49; i++) {
+    let stupidArray = theArray[0];
+    let newImg = document.createElement('img');
+    newImg.src = stupidArray[i].url;
+    body.appendChild(newImg);
+  }
 }
