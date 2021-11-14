@@ -1,12 +1,13 @@
 const body = document.querySelector('body');
 const form = document.forms[0];
 const input = document.querySelector('input');
+const img = document.querySelector('img');
 
 let theArray;
 const getData = (search) => {
   theArray = [];
   fetch(
-    'https://api.giphy.com/v1/gifs/search?api_key=ANIJA3rCnAySYPvxmFd5SOli9wX62Gp5&q=' +
+    'https://api.giphy.com/v1/gifs/translate?api_key=ANIJA3rCnAySYPvxmFd5SOli9wX62Gp5&s=' +
       search,
     { mode: 'cors' }
   )
@@ -14,7 +15,7 @@ const getData = (search) => {
       return response.json();
     })
     .then(function (response) {
-      theArray.push(response.data);
+      img.src = response.data.images.original.url;
     });
 };
 
